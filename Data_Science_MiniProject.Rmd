@@ -19,14 +19,11 @@ library(dslabs)
 ```
 
 ```{r}
-#maternal <- read.table(file = 'Maternal Health Risk Data Set.csv', header = TRUE, sep = "\t",
-                       #stringsAsFactors = TRUE)
 maternal <- read.csv(file = 'Maternal Health Risk Data Set.csv')
 head(maternal)
 ```
-```{r}
-
-```
+1.	Group the data by risk level 
+(i)	Find the mean age of each risk level and order them in descending order.
 
 ```{r}
 maternal %>% 
@@ -38,21 +35,25 @@ maternal %>%
   arrange(desc(Age)) %>% 
   head()
 ```
+1.	Group the data by risk level 
+(ii)	Find the median diastolic of each risk level and order them in ascending order. 
 ```{r}
 maternal %>% 
   group_by(RiskLevel) %>% summarize(DBpMedian = median(DiastolicBP)) %>% arrange(DBpMedian)
-#head(maternal)
 ```
+2.	Create a new variable name it systolic rate. Where systolic rate = systolic BP/age
 ```{r}
 maternal <- mutate(maternal, systolic_rate = SystolicBP / Age)
 head(maternal)
 ```
+3.	Filter participants of age <= 40 years, determine average systolic rate for each risk level
 ```{r}
 filter(maternal, Age <= 40) 
 ```
 ```{r}
 filter(maternal, Age <= 40) %>% group_by(RiskLevel) %>% summarize(avgSR = mean(systolic_rate))
 ```
+4.	For each continuous variable in the dataset, create histograms and box plots, and provide insights on the data distribution.
 ```{r}
 hist(maternal$Age)
 hist(maternal$DiastolicBP)
@@ -71,17 +72,23 @@ boxplot(BS~RiskLevel, data = maternal)
 boxplot(BodyTemp~RiskLevel, data = maternal)
 boxplot(HeartRate~RiskLevel, data = maternal)
 ```
+5.	A) Explore the relationship between heart rate and the following variables using suitable graphical methods:
+(i) Age
+(ii) Systolic blood pressure
+(iii) Diastolic blood pressure
+(iv) Body temperature
+
 ```{r}
 plot(maternal$Age, maternal$HeartRate) # Observed there is no linear relationship between Age and HeartRate
 plot(maternal$SystolicBP, maternal$HeartRate)
 plot(maternal$DiastolicBP, maternal$HeartRate)
 plot(maternal$BodyTemp, maternal$HeartRate)
 ```
-
+Calculate the five-number summary for each variable, grouped by risk level.
 ```{r}
-#maternal %>% group_by(RiskLevel) %>% summary(maternal)
 summary(maternal)
 ```
+B) Fit a simple linear model using heart rate as a response variable and the variables in A as predictor variables.
 ```{r}
 modelAge <- lm (HeartRate~Age, data = maternal) #Responsive/Dependent variable vs Explanatory/Independent variable
 modelSBP <- lm (HeartRate~SystolicBP, data = maternal)
@@ -91,6 +98,9 @@ summary(modelAge) #Display the model
 summary(modelSBP)
 summary(modelDBP)
 summary(modelBTemp)
+
+#It was observed that all models presented had the Adjusted R-Squared of less than 1% which is less than the recommended value of 60% and above. 
+#Less than 1% of the variance in heart rate is explained by Age, SystolicBP, DiastolicBP and BodyTemp,thus, the model is not fit to the data. 
 ```
 
 
