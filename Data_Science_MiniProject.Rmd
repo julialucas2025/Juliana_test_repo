@@ -72,11 +72,10 @@ boxplot(BodyTemp~RiskLevel, data = maternal)
 boxplot(HeartRate~RiskLevel, data = maternal)
 ```
 ```{r}
-boxplot(HeartRate~Age, data = maternal)
-#boxplot(Age~HeartRate, data = maternal)
-#boxplot(DiastolicBP~HeartRate, data = maternal)
-#boxplot(SystolicBP~HeartRate, data = maternal)
-#boxplot(BodyTemp~HeartRate, data = maternal)
+plot(maternal$Age, maternal$HeartRate) # Observed there is no linear relationship between Age and HeartRate
+plot(maternal$SystolicBP, maternal$HeartRate)
+plot(maternal$DiastolicBP, maternal$HeartRate)
+plot(maternal$BodyTemp, maternal$HeartRate)
 ```
 
 ```{r}
