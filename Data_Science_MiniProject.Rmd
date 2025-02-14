@@ -102,7 +102,19 @@ summary(modelBTemp)
 #It was observed that all models presented had the Adjusted R-Squared of less than 1% which is less than the recommended value of 60% and above. 
 #Less than 1% of the variance in heart rate is explained by Age, SystolicBP, DiastolicBP and BodyTemp,thus, the model is not fit to the data. 
 ```
+6.	Challenge yourself: Fit a multiple linear regression model with heart rate as the response variable and the four predictor variables from Question 5. Then, apply stepwise selection to identify the best-fitting model.
 
+#For all continuous variables against HeartRate
+```{r}
+model <- lm (HeartRate~Age + SystolicBP + DiastolicBP + BodyTemp, data = maternal)
+summary(model)
+#The model in comparison of all continuous variables against heart rate is particular significant since p-value: 2.51e-05 = 0.0000251 which is within the recommended range p-value < 0.05. However, the model is overall not fit to these data since the Adjusted R-square is less than 60% 0.6 for all variables
+```
 
+# Age and BodyTemp against HeartRate
+```{r}
+modelBTMA <- lm (HeartRate~Age + BodyTemp, data = maternal)
+summary(modelBTMA)
+```
 
 
