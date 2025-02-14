@@ -1,0 +1,95 @@
+---
+title: "Data_Science_Project"
+author: "Juliana L. M"
+date: "2025-02-14"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, eval=FALSE}
+getwd()
+```
+```{r}
+library(tidyverse)
+library(dplyr)
+library(dslabs)
+```
+
+```{r}
+#maternal <- read.table(file = 'Maternal Health Risk Data Set.csv', header = TRUE, sep = "\t",
+                       #stringsAsFactors = TRUE)
+maternal <- read.csv(file = 'Maternal Health Risk Data Set.csv')
+head(maternal)
+```
+```{r}
+
+```
+
+```{r}
+maternal %>% 
+  group_by(RiskLevel) %>% summarize(avg = mean(Age)) %>% arrange(desc(avg))
+```
+
+```{r}
+maternal %>% 
+  arrange(desc(Age)) %>% 
+  head()
+```
+```{r}
+maternal %>% 
+  group_by(RiskLevel) %>% summarize(DBpMedian = median(DiastolicBP)) %>% arrange(DBpMedian)
+#head(maternal)
+```
+```{r}
+maternal <- mutate(maternal, systolic_rate = SystolicBP / Age)
+head(maternal)
+```
+```{r}
+filter(maternal, Age <= 40) 
+```
+```{r}
+filter(maternal, Age <= 40) %>% group_by(RiskLevel) %>% summarize(avgSR = mean(systolic_rate))
+```
+```{r}
+hist(maternal$Age)
+hist(maternal$DiastolicBP)
+hist(maternal$SystolicBP)
+hist(maternal$systolic_rate)
+hist(maternal$BS)
+hist(maternal$BodyTemp)
+hist(maternal$HeartRate)
+```
+```{r}
+boxplot(Age~RiskLevel, data = maternal)
+boxplot(DiastolicBP~RiskLevel, data = maternal)
+boxplot(SystolicBP~RiskLevel, data = maternal)
+boxplot(systolic_rate~RiskLevel, data = maternal)
+boxplot(BS~RiskLevel, data = maternal)
+boxplot(BodyTemp~RiskLevel, data = maternal)
+boxplot(HeartRate~RiskLevel, data = maternal)
+```
+```{r}
+boxplot(HeartRate~Age, data = maternal)
+#boxplot(Age~HeartRate, data = maternal)
+#boxplot(DiastolicBP~HeartRate, data = maternal)
+#boxplot(SystolicBP~HeartRate, data = maternal)
+#boxplot(BodyTemp~HeartRate, data = maternal)
+```
+
+```{r}
+#maternal %>% group_by(RiskLevel) %>% summary(maternal)
+summary(maternal)
+```
+```{r}
+model <- lm (HeartRate~Age, data = maternal) #Responsive/Dependent variable vs Explanatory/Independent variable
+summary(model)
+```
+```{r}
+
+```
+
+
+
