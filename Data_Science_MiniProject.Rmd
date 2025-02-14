@@ -83,12 +83,16 @@ plot(maternal$BodyTemp, maternal$HeartRate)
 summary(maternal)
 ```
 ```{r}
-model <- lm (HeartRate~Age, data = maternal) #Responsive/Dependent variable vs Explanatory/Independent variable
-summary(model)
+modelAge <- lm (HeartRate~Age, data = maternal) #Responsive/Dependent variable vs Explanatory/Independent variable
+modelSBP <- lm (HeartRate~SystolicBP, data = maternal)
+modelDBP <- lm (HeartRate~DiastolicBP, data = maternal)
+modelBTemp <- lm (HeartRate~BodyTemp, data = maternal)
+summary(modelAge) #Display the model
+summary(modelSBP)
+summary(modelDBP)
+summary(modelBTemp)
 ```
-```{r}
 
-```
 
 
 
